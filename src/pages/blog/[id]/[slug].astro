@@ -1,0 +1,84 @@
+---
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+import Comments from '../../../components/Comments.astro';
+import Layout from '../../../layouts/Layout.astro';
+import edjsHTML from 'editorjs-html';
+import "../../../styles/blogStyle.astro"
+
+interface Post {
+	id: number,
+	title: string,
+	publish: boolean,
+	timestamp: Date,
+	comments: string[]
+} 
+
+interface Block {
+  id: number,
+  data: Record<string, any>,
+  type: string
+}
+
+const edjsParser = edjsHTML();
+
+export async function getStaticPaths() {
+  const response = await fetch(import.meta.env.PUBLIC_POST_API);
+  const posts = await response.json();
+
+  return posts.map((post: Post) => ({
+    params: {id: post.id, slug: post.title.split(" ").join("-")}
+  }));
+
+}
+
+const {id, slug} = Astro.params;
+const response = await fetch(`${import.meta.env.PUBLIC_POST_API}/${id}`);
+const post = await response.json();
+
+let html = edjsParser.parse(post.content);
+---
+
+<Layout>
+  <Nav />
+  <div class="main">
+    <div class="breadcrumb"> <a href="/">Blogs</a> > {post.title} </div>
+    <div set:html={html} />
+    <Comments />
+  </div>
+  <Footer />
+</Layout>
+
+<style>
+  .main {
+    padding: 20px;
+		flex-grow: 1;
+    color: var(--foreground-color);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  a {
+    color: var(--foreground-color);
+    text-decoration: none;
+    position: relative;
+  }
+
+  a::after{
+    content: "";
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary-color);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  a:hover::after {
+    transform: scaleX(1);
+  }
+
+</style>

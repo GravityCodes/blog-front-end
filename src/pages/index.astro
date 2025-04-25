@@ -4,6 +4,7 @@ import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
 
 interface Post {
+	id: number,
 	title: string,
 	publish: boolean,
 	timestamp: Date,
@@ -17,12 +18,12 @@ const posts = await response.json();
 <Layout>
 	<Nav />
 	<div class="main">
-		<h1>Articles</h1>
-		<div class="article-wrapper">
+		<h1>Blogs</h1>
+		<div class="blog-wrapper">
 			{posts.map((post: Post) =>
-				<div class="article-card">
+				<a href={`/blog/${post.id}/${post.title.split(" ").join('-')}`} class="blog-card">
 					<h2>{post.title}</h2>
-					<div class="article-info">
+					<div class="blog-info">
 						{
 							post.comments.length > 0 ?
 							<div class="comment-wrapper">
@@ -36,7 +37,7 @@ const posts = await response.json();
 							day: "numeric"
 						})}</div>
 					</div>
-				</div>
+				</a>
 				)}
 		</div>
 	</div>
@@ -54,12 +55,12 @@ const posts = await response.json();
 		flex-grow: 1;
 	}
 
-	.article-wrapper {
+	.blog-wrapper {
 		display: flex;
 		gap: 10px;
 	}
 
-	.article-card {
+	.blog-card {
 		background-color: var(--background-color);
 		padding: 10px;
 		color: var(--foreground-color);
@@ -74,13 +75,14 @@ const posts = await response.json();
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
+		text-decoration: none;
 	}
 
-	.article-card::after {
+	.blog-card::after {
 		content: "";
 		position: absolute;
 		width: 100%;
-		height: 60%;
+		height: 100%;
 		background-color: var(--primary-color);
 		left: 0;
 		top: 0;
@@ -91,17 +93,17 @@ const posts = await response.json();
 		z-index: -1;
 	}
 
-	.article-card:hover::after {
+	.blog-card:hover::after {
 		transform: scale(1);
 	}
 
-	.article-card:hover {
+	.blog-card:hover {
 		transform: translateY(-10px);
 		border-color: var(--primary-color);
 		color: var(--foreground-color);
 	}
 
-	.article-info {
+	.blog-info {
 		display: flex;
 		gap: 20px;
 		color: var(--accent-color);
