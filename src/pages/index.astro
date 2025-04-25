@@ -1,0 +1,109 @@
+---
+import Nav from '../components/Nav.astro';
+import Layout from '../layouts/Layout.astro';
+
+interface Post {
+	title: string,
+	publish: boolean,
+	timestamp: Date,
+	comments: string[]
+} 
+
+const response = await fetch(import.meta.env.PUBLIC_POST_API);
+const posts = await response.json();
+---
+
+<Layout>
+	<Nav />
+	<div class="main">
+		<h1>Articles</h1>
+		<div class="article-wrapper">
+			{posts.map((post: Post) =>
+				<div class="article-card">
+					<h2>{post.title}</h2>
+					<div class="article-info">
+						{
+							post.comments.length > 0 ?
+							<div class="comment-wrapper">
+								<div class="comment-amount">{post.comments.length}</div>
+								<img src="/message-square.svg" alt="comment icon"/>
+							</div> : ""
+						}
+						<div class="time-created">{new Date(post.timestamp).toLocaleDateString("en-US", {
+							year: "numeric",
+							month: "long",
+							day: "numeric"
+						})}</div>
+					</div>
+				</div>
+				)}
+		</div>
+	</div>
+</Layout>
+
+<style>
+	h1 {
+		color: var(--foreground-color);
+		font-size: 1rem;
+	}
+
+	.main {
+		padding: 20px;
+	}
+
+	.article-wrapper {
+		display: flex;
+		gap: 10px;
+	}
+
+	.article-card {
+		background-color: #5c5b5b;
+		padding: 10px;
+		color: var(--foreground-color);
+		border-radius: 10px;
+		border: 1px solid var(--accent-color);
+		position: relative;
+		cursor: pointer;
+		transform: translateY(0);
+		transition: border 0.4s, transform 0.3s ease-in-out;
+	}
+
+	.article-card::after {
+		content: "";
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-color: var(--primary-color);
+		left: 0;
+		top: 0;
+		border-radius: 10px;
+		transform: scaleX(0);
+		transform-origin: left;
+		transition: transform 1s;
+		z-index: -1;
+	}
+
+	.article-card:hover::after {
+		transform: scale(1);
+	}
+
+	.article-card:hover {
+		transform: translateY(-10px);
+		border-color: var(--primary-color);
+	}
+
+	.article-info {
+		display: flex;
+		gap: 20px;
+	}
+
+	.comment-wrapper {
+		display: flex;
+		align-items: center;
+		gap: 2px;
+	}
+
+	.comment-wrapper img {
+		height: 15px;
+	}
+</style>
