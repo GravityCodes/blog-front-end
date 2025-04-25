@@ -1,6 +1,7 @@
 ---
 import Nav from '../components/Nav.astro';
 import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
 
 interface Post {
 	title: string,
@@ -39,6 +40,7 @@ const posts = await response.json();
 				)}
 		</div>
 	</div>
+	<Footer />
 </Layout>
 
 <style>
@@ -49,6 +51,7 @@ const posts = await response.json();
 
 	.main {
 		padding: 20px;
+		flex-grow: 1;
 	}
 
 	.article-wrapper {
@@ -57,7 +60,7 @@ const posts = await response.json();
 	}
 
 	.article-card {
-		background-color: #5c5b5b;
+		background-color: var(--background-color);
 		padding: 10px;
 		color: var(--foreground-color);
 		border-radius: 10px;
@@ -66,20 +69,25 @@ const posts = await response.json();
 		cursor: pointer;
 		transform: translateY(0);
 		transition: border 0.4s, transform 0.3s ease-in-out;
+		overflow: hidden;
+		min-height: 150px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
 	}
 
 	.article-card::after {
 		content: "";
 		position: absolute;
 		width: 100%;
-		height: 100%;
+		height: 60%;
 		background-color: var(--primary-color);
 		left: 0;
 		top: 0;
 		border-radius: 10px;
-		transform: scaleX(0);
-		transform-origin: left;
-		transition: transform 1s;
+		transform: scaleY(0);
+		transform-origin: top;
+		transition: transform 0.3s;
 		z-index: -1;
 	}
 
@@ -90,11 +98,13 @@ const posts = await response.json();
 	.article-card:hover {
 		transform: translateY(-10px);
 		border-color: var(--primary-color);
+		color: var(--foreground-color);
 	}
 
 	.article-info {
 		display: flex;
 		gap: 20px;
+		color: var(--accent-color);
 	}
 
 	.comment-wrapper {
