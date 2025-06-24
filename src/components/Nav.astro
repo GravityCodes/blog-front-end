@@ -1,3 +1,12 @@
+---
+
+import { parse } from 'cookie';
+
+const cookies = parse(Astro.request.headers.get('cookie') || '');
+const isLoggedIn = Boolean(cookies.token);
+
+---
+
 <nav>
   <div class="nav-left">
     <div class="logo">JohanCodes</div>
@@ -5,8 +14,12 @@
   <div class="nav-right">
     <div class="nav-item"><a href="/">Home</a></div>
     <div class="nav-item"><a href="#">About</a></div>
-    <div class="nav-item"><a href="/login">Login</a></div>
-    <div class="nav-item"><a href="/signup">Sign Up</a></div>
+    {isLoggedIn ? (
+      <div class="nav-item"><a href="/logout">Logout</a></div>
+    ) : (
+      <div class="nav-item"><a href="/login">Login</a></div>
+      <div class="nav-item"><a href="/signup">Sign Up</a></div>
+    )}
   </div>
 </nav>
 

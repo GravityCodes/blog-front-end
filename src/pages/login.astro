@@ -8,7 +8,7 @@ import "../styles/CredentialScreens.css"
 <Layout>
   <Nav />
 
-  <form method="POST" action="http://localhost:3000/user/login">
+  <form method="POST">
     <h1>JohanCodes</h1>
     <h2>Login</h2>
     <div class="form-section">
@@ -32,3 +32,34 @@ import "../styles/CredentialScreens.css"
     
   }
 </style>
+
+<script>
+  const form = document.querySelector('form');
+
+  form?.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const data = {
+      email: this.email.value,
+      password: this.password.value,
+    };
+
+
+    const response = await fetch(import.meta.env.PUBLIC_LOGIN_API, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "include",
+      body: JSON.stringify(data)
+    });
+
+    if(response.ok) {
+      console.log(response);
+      // window.location.href = "/";
+    } else {
+      console.error("Failed to submit JSON form");
+    }
+
+  });
+</script>
