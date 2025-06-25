@@ -1,5 +1,4 @@
 ---
-
 import { parse } from 'cookie';
 
 const cookies = parse(Astro.request.headers.get('cookie') || '');
@@ -15,13 +14,36 @@ const isLoggedIn = Boolean(cookies.token);
     <div class="nav-item"><a href="/">Home</a></div>
     <div class="nav-item"><a href="#">About</a></div>
     {isLoggedIn ? (
-      <div class="nav-item"><a href="/logout">Logout</a></div>
+      <button id="logout-btn">logout</button>
     ) : (
       <div class="nav-item"><a href="/login">Login</a></div>
       <div class="nav-item"><a href="/signup">Sign Up</a></div>
     )}
   </div>
 </nav>
+
+<script>
+  const logout = document.querySelector("#logout-btn");
+
+  logout?.addEventListener('click', async () => {
+    try{    
+      
+      const res = await fetch(import.meta.env.PUBLIC_LOGOUT_API, {
+        method: "POST",
+        credentials: "include"
+      });
+
+      if(res.ok){
+        window.location.reload();
+      }
+      else {
+        console.error("Logout failed");
+      }
+    }catch(error) {
+      console.error("Error during logging out", error);
+    }
+  })
+</script>
 
 <style>
   nav {
@@ -78,3 +100,4 @@ const isLoggedIn = Boolean(cookies.token);
   }
 
 </style>
+
