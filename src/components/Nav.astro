@@ -14,7 +14,7 @@ const isLoggedIn = Boolean(cookies.token);
     <div class="nav-item"><a href="/">Home</a></div>
     <div class="nav-item"><a href="#">About</a></div>
     {isLoggedIn ? (
-      <button id="logout-btn">logout</button>
+      <button class="nav-item" id="logout-btn">Logout</button>
     ) : (
       <div class="nav-item"><a href="/login">Login</a></div>
       <div class="nav-item"><a href="/signup">Sign Up</a></div>
@@ -61,7 +61,7 @@ const isLoggedIn = Boolean(cookies.token);
     font-weight: bold;
   }
 
-  a {
+  a{
     color: var(--foreground-color);
     text-decoration: none;
   }
@@ -73,12 +73,12 @@ const isLoggedIn = Boolean(cookies.token);
     padding: 20px;
   }
 
-  .nav-item {
+  .nav-item{
     cursor: pointer;
     position: relative;
   }
 
-  .nav-item::after {
+  .nav-item::after{
     content: "";
     width: 100%;
     height: 2px;
@@ -91,12 +91,20 @@ const isLoggedIn = Boolean(cookies.token);
     transition: transform 0.3s;
   }
 
-  .nav-item a:hover {
+  .nav-item a:hover,
+  #logout-btn:hover {
     color: var(--primary-color);
   }
 
   .nav-item:hover::after {
     transform: scaleX(1);
+  }
+
+  #logout-btn {
+    background-color: transparent;
+    color: var(--foreground-color);
+    border: none;
+    font-size: 16px;
   }
 
 </style>
