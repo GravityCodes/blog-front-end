@@ -15,29 +15,31 @@ import "../styles/CredentialScreens.css"
       <label for="email">Email</label>
       <input type="text" id="email" name="email" required>
     </div>
-    <!-- {errors.email && <p>{errors.email}</p>} -->
     <div class="form-section">
       <label for="password">Password</label>
       <input type="password" id="password" name="password" required>
     </div>
-    <!-- {errors.password && <p>{errors.password}</p>} -->
-    <button type="submit">Login</button>
+    <div class="error-container hide" >
+    </div>
+    <button type="submit" id="submit-btn">Login</button>
   </form>
   <Footer />
 
 </Layout>
 
 <style>
-  form {
-    
-  }
+
 </style>
 
 <script>
   const form = document.querySelector('form');
+  const submitBtn = document.querySelector("#submit-btn");
+  const errorContainer = document.querySelector('.error-container')!;
 
   form?.addEventListener('submit', async function (e) {
     e.preventDefault();
+
+    submitBtn?.classList.add("loading");
 
     const data = {
       email: this.email.value,
@@ -57,6 +59,13 @@ import "../styles/CredentialScreens.css"
     if(response.ok) {
       window.location.href = "/";
     } else {
+      submitBtn?.classList.remove("loading");
+      
+      let error = await response.json();
+
+      errorContainer.classList.remove("hide");
+      errorContainer.textContent += error.msg;
+      
       console.error("Failed to submit JSON form");
     }
 
