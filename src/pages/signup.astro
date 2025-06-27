@@ -12,18 +12,25 @@ import "../styles/CredentialScreens.css"
     <h1>JohanCodes</h1>
     <h2>Sign Up</h2>
     <div class="form-section">
-      <label for="username">UserName</label>
-      <input type="text" id="username">
+      <label for="name">Name</label>
+      <input type="text" id="name">
+    </div>
+    <div class="form-section">
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email">
     </div>
     <div class="form-section">
       <label for="password">Password</label>
-      <input type="password" id="password">
+      <input type="password" name="password" id="password" minlength="4">
     </div>
     <div class="form-section">
       <label for="repassword">Re-Password</label>
       <input type="password" id="repassword">
+      <div class="repassword-error"></div>
     </div>
-    <button type="submit">Login</button>
+    <div class="error-container hide" >
+    </div>
+    <button type="submit" id="submit-btn">Sign Up</button>
   </form>
   <Footer />
 
@@ -32,3 +39,67 @@ import "../styles/CredentialScreens.css"
 <style>
 
 </style>
+
+<script>
+  const form = document.querySelector('form') as HTMLFormElement;
+  const submitBtn = document.querySelector('#submit-btn') as HTMLFormElement;
+  const errorContainer = document.querySelector('.error-container')!;
+  const name = document.querySelector("#name") as HTMLInputElement;
+  const email = document.querySelector("#email") as HTMLInputElement
+  const password = document.querySelector('#password') as HTMLInputElement;
+  const repassword = document.querySelector('#repassword') as HTMLInputElement;
+
+
+  repassword?.addEventListener('input', (e) => {
+    const input = e.target as HTMLInputElement;
+
+    if(input.value == password.value){
+      input.setCustomValidity("");
+    } else {
+      input.setCustomValidity("Passwords do not match");
+    }
+  });
+
+  form?.addEventListener('submit', async function(e){
+    e.preventDefault();
+
+
+    submitBtn?.classList.add("loading");
+
+
+    const data = {
+      name: name.value,
+      email: email.value,
+      password: password.value,
+    };
+
+    console.log(data);
+
+    try{const response = await fetch(import.meta.env.PUBLIC_SIGNUP_API, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify(data)
+      });
+
+      if(response.ok) {
+        window.location.href = "/login";
+      } else {
+        submitBtn?.classList.remove("loading");
+        
+        let error = await response.json();
+
+        errorContainer.classList.remove("hide");
+        errorContainer.textContent += error.msg;
+        
+        console.error("Failed to submit JSON form");
+      }
+    }catch(err){
+      const message = err instanceof Error ? err.message : String(err);
+      errorContainer.textContent = message;
+    }
+
+  })
+</script>
