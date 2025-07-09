@@ -45,7 +45,7 @@ let html = edjsParser.parse(post.content);
   <div class="main">
     <div class="breadcrumb"> <a href="/">Blogs</a> > {post.title} </div>
     <div set:html={html} />
-    <Comments />
+    <Comments postId={id} />
   </div>
   <Footer />
 </Layout>
