@@ -61,10 +61,11 @@ import "../styles/CredentialScreens.css"
     } else {
       submitBtn?.classList.remove("loading");
       
-      let error = await response.json();
+      let {errors} = await response.json();
 
+      errorContainer.textContent = "";
       errorContainer.classList.remove("hide");
-      errorContainer.textContent += error.msg;
+      errorContainer.textContent += errors[0].msg;
       
       console.error("Failed to submit JSON form");
     }
