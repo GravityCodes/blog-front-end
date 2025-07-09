@@ -1,15 +1,57 @@
 ---
-
+  const {postId} = Astro.props;
+  const response = await fetch(`${import.meta.env.PUBLIC_POST_API}/${postId}/comments`);
+  const data = await response.json();
+  const apiUrl = import.meta.env.PUBLIC_POST_API;
 ---
 
 <div class="comments-container">
   <div class="add-message-wrapper">
-      <input type="text" id="add-message" placeholder="Share your thoughts...">
+      <textarea id="add-message" placeholder="Share your thoughts..." required maxlength=""></textarea>
+      <span></span>
+      <button class="comment-btn" id="submit-btn">Comment</button>
   </div>
   <div class="comments">
-    
+    {comments.forEach(comment => {
+      return <div></div>
+    })}
   </div>
 </div>
+
+<script define:vars={{postId, apiUrl}}>
+  const submitBtn = document.querySelector("#submit-btn");
+  
+  submitBtn?.addEventListener('click', async () => {
+    const textarea = document.querySelector("#add-message");
+    const errorMsg = document.querySelector("span");
+    const data = {content: textarea.value};
+    if(textarea.validity.valid){
+      errorMsg.textContent = "";
+      const response = await fetch(`${apiUrl}/${postId}/comments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify(data)
+      });
+
+      if(response.ok) {
+        errorMsg.textContent="";
+        location.reload();
+      }
+      else {
+        let {errors} = await response.json();
+
+        errorMsg.textContent = errors[0].msg;
+      }
+    }else {
+      errorMsg.textContent = "Comment can't be empty.";
+    }
+    
+  })
+</script>
+
 
 <style> 
  label {
@@ -17,7 +59,7 @@
   z-index: 2;
   color: var(--accent-color);
  }
- input {
+ textarea {
   background-color: var(--accent-color-3);
   padding: 10px;
   width: 100%;
@@ -27,6 +69,17 @@
  }
  .comments-container {
   padding: 20px;
+ }
+ .add-message-wrapper {
+  display: flex;
+  gap: 20px;
+ }
+ .comment-btn {
+  background-color: var(--background-color);
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  border-radius: 5px;
+  cursor: pointer;
  }
 
 </style>
