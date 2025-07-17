@@ -27,6 +27,11 @@
 		--error-color: #f05e5e;
 		--error-accent-color: #b25353 ;
 	}
+
+	.msg-icon{
+		color: white;
+	}
+
 	html,
 	body {
 		margin: 0;
@@ -45,6 +50,21 @@
 		flex-direction:column;
 	}
 
+	@media (prefers-color-scheme: light) {
+		:root {
+				--background-color:#ffffff;
+				--foreground-color:#1a1a1a;
+				--accent-color-1: #ededed;
+				--accent-color-2: #dfdfdf;
+				--accent-color-3: #d2d2d2;
+		}
+		img {
+			filter: invert(1);
+		}
+		.msg-icon{
+			color: black;
+		}
 
+	}
 
 </style>
