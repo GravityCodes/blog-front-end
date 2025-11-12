@@ -17,14 +17,14 @@
 }
 
 .loading:active {
-  color: var(--accent-color-1)
+  color: var(--accent-color-1);
 }
 
 @keyframes spinner {
-  from{
+  from {
     transform: rotate(0deg);
   }
-  to{
+  to {
     transform: rotate(360deg);
   }
 }

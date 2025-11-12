@@ -19,7 +19,7 @@ const posts = await response.json();
 <Layout>
 	<Nav />
 	<div class="main">
-		<h1>Blogs</h1>
+		<h1>All Post</h1>
 		<div class="blog-wrapper">
 			{posts.map((post: Post) =>
 				<a href={`/blog/${post.id}/${post.title.split(" ").join('-')}`} class="blog-card">
@@ -70,7 +70,7 @@ const posts = await response.json();
 		padding: 10px;
 		color: var(--foreground-color);
 		border-radius: 10px;
-		border: 1px solid var(--accent-color);
+		border: 2px solid var(--accent-color-2);
 		position: relative;
 		cursor: pointer;
 		transform: translateY(0);
@@ -91,6 +91,7 @@ const posts = await response.json();
 		background-color: var(--primary-color);
 		left: 0;
 		top: 0;
+		border: 2px solid var(--primary-color);
 		border-radius: 10px;
 		transform: scaleY(0);
 		transform-origin: top;
@@ -103,7 +104,7 @@ const posts = await response.json();
 	}
 
 	.blog-card:hover {
-		transform: translateY(-10px);
+		transform: translateY(-5px);
 		border-color: var(--primary-color);
 		color: var(--foreground-color);
 	}

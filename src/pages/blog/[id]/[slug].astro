@@ -43,7 +43,7 @@ let html = edjsParser.parse(post.content);
 <Layout>
   <Nav />
   <div class="main">
-    <div class="breadcrumb"> <a href="/">Blogs</a> > {post.title} </div>
+    <div class="breadcrumb"> <a href="/">All Posts</a> > {post.title} </div>
     <div set:html={html} />
     <Comments postId={id} />
   </div>
@@ -63,6 +63,7 @@ let html = edjsParser.parse(post.content);
     color: var(--foreground-color);
     text-decoration: none;
     position: relative;
+    margin-right: 4px;
   }
 
   a::after{
@@ -80,6 +81,10 @@ let html = edjsParser.parse(post.content);
 
   a:hover::after {
     transform: scaleX(1);
+  }
+
+  .breadcrumb{
+    margin-bottom: 20px;
   }
 
 </style>
