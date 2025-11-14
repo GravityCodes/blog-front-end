@@ -4,6 +4,10 @@ This is the frontend of TheOdinProject's Blog API. The focus of this project was
 learn about API's basics and security. Prior to this project I was creating the backend and frontend
 in one directory but I have split the two for this one and made a API only backend.
 
+<img width="2284" height="795" alt="JohanCodes_Main" src="https://github.com/user-attachments/assets/1a672319-c850-4841-8aad-7449885e2de6" />
+<img width="2302" height="1170" alt="JohanCodes_Post" src="https://github.com/user-attachments/assets/760a0d70-1eb4-4d50-8eeb-05aed8d0cfb9" />
+
+
 ## Features
 
 - Creating, Login and Logging out users.
