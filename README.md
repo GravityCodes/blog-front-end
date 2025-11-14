@@ -49,7 +49,7 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-#Tech Used
+# Tech Used
 
-[Astro](https://astro.build/) - Web Framework used in this project.
-[editorjs-html](https://github.com/pavittarx/editorjs-html) - Parse Editor.js clean data to html.
+- [Astro](https://astro.build/) - Web Framework used in this project.
+- [editorjs-html](https://github.com/pavittarx/editorjs-html) - Parse Editor.js clean data to html.
