@@ -16,7 +16,7 @@ in one directory but I have split the two for this one and made a API only backe
 
 ## Getting Started
 
-### Prerequisties
+### Prerequisites
 
 In order for the frontend to function you will need the backend up and running.
 - https://github.com/GravityCodes/blog-back-end
